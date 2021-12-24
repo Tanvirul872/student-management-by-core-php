@@ -1,4 +1,7 @@
 <?php 
+ 
+ require_once'./dbcon.php'; 
+
 if(isset($_POST['registration'])){ 
   
  $name = $_POST['name'];
@@ -28,6 +31,28 @@ if(empty($password)){
 if(empty($c_password)){
   $input_error['c_password'] = "The confirm password field is required"; 
 }
+
+if(count($input_error)=="0"){
+  $email_check = mysqli_query($link,"SELECT * FROM `users` WHERE `email` = '$email';"); 
+ if(mysqli_num_rows($email_check)==0){
+  $user_check = mysqli_query($link,"SELECT * FROM `users` WHERE `username` = '$username';"); 
+  if(mysqli_num_rows($user_check)==0){
+     if($password==$c_password){ 
+
+      //database insert code start from here... 
+
+     }else{
+       $c_pass_error="confirmd password not match!"; 
+     }
+  }else{
+    $user_error = "This user has already exists.please try again!"; 
+  } //suser check end 
+
+ }else{
+       $email_error = "This email has already exists.please try again!";
+  }
+
+} 
 
 //   echo '<pre>'; 
 //  print_r($input_error);
@@ -71,12 +96,18 @@ if(empty($c_password)){
                     <label style="color:red;">
                      <?php if(isset($input_error['username'])){ echo $input_error['username']; }?>
                   </label>
+                  <label style="color:red;">
+                     <?php if(isset($user_error)){ echo $user_error; }?>
+                  </label>
                   <div class="">
                   <label for="email" class="control-label col-md-1"> email  </label>
                   <input class="form-control" id="email" type="email" name="email" value="<?php if(isset($email)){echo $email; }?>" placeholder="write your email here" />  
                   </div>
                   <label style="color:red;">
                      <?php if(isset($input_error['email'])){ echo $input_error['email']; }?>
+                  </label> 
+                  <label style="color:red;">
+                     <?php if(isset($email_error)){ echo  $email_error; }?>
                   </label>
                  
                     <div class=""> 
@@ -93,6 +124,9 @@ if(empty($c_password)){
                     </div>
                     <label style="color:red;">
                      <?php if(isset($input_error['c_password'])){ echo $input_error['c_password']; }?>
+                    </label>
+                     <label style="color:red;">
+                     <?php if(isset($c_pass_error)){ echo $c_pass_error; }?>
                     </label>
                   
                   <div class="div">
