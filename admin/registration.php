@@ -1,6 +1,7 @@
 <?php 
  
  require_once'./dbcon.php'; 
+ session_start();
 
 if(isset($_POST['registration'])){ 
   
@@ -15,6 +16,9 @@ if(isset($_POST['registration'])){
  $photo_name = $username.'.'.$photo; 
 
  $input_error = array(); 
+
+
+
 if(empty($name)){
   $input_error['name'] = "The name field is required"; 
 }
@@ -38,8 +42,18 @@ if(count($input_error)=="0"){
   $user_check = mysqli_query($link,"SELECT * FROM `users` WHERE `username` = '$username';"); 
   if(mysqli_num_rows($user_check)==0){
      if($password==$c_password){ 
-
+      $password = md5($password); 
       //database insert code start from here... 
+      $query = "INSERT INTO `users`( `name`, `email`, `username`, `password`, `photo`, `status`) VALUES ('$name','$email','$username','$password','$photo_name','inactive')"; 
+       $result = mysqli_query($link,$query); 
+       if($result){
+         $_SESSION['data_insert_success'] ="Data Insert Successfully";
+         move_uploaded_file($_FILES['photo']['tmp_name'],'images/'.$photo_name); 
+         header('location:registration.php');  
+       }else{
+        $_SESSION['data_insert_error'] ="Data Insert Error"; 
+       }
+
 
      }else{
        $c_pass_error="confirmd password not match!"; 
@@ -80,6 +94,16 @@ if(count($input_error)=="0"){
     
           <div class="col-md-12">
           <h2 class="text-center"> Admin registration form </h2>
+
+          <hr> 
+          <?php if(isset($_SESSION['data_insert_success'])){
+            echo '<div class="alert alert-success">'.$_SESSION['data_insert_success'].'</div>'; unset($_SESSION['data_insert_success']);  
+          }?>
+        <?php if(isset($_SESSION['data_insert_error'])){
+            echo '<div class="alert alert-warning">'.$_SESSION['data_insert_error'].'</div>'; unset($_SESSION['data_insert_error']);
+          }?>
+            
+          <hr>
                <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
                    <div class="">
                       <label for="name" class="control-label col-md-1"> Name  </label>

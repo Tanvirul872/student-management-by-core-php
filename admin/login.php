@@ -1,3 +1,34 @@
+<?php 
+ require_once './dbcon.php'; 
+ session_start(); 
+if(isset($_POST['login'])){
+
+
+  
+   
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+  $username_check = mysqli_query($link,"SELECT * FROM `users` WHERE `username`='$username'");
+   if(mysqli_num_rows($username_check)>0){
+    
+    $row = mysqli_fetch_assoc($username_check);
+   
+    if($row['password']){
+      print_r($row['password']); 
+       if($row['status'] == 'active'){
+            header('location:index.php'); 
+       }else{
+        echo 'no'; 
+       }
+    }
+
+   }else{
+     $username_not_found ="User not found"; 
+   }
+}
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -19,17 +50,18 @@
           <h2 class="text-center"> Admin login form </h2>
                <form action="login.php" method="POST">
                     <div>
-                         <input class="form-control" type="text" placeholder="Username" name="username" required  >
+                         <input class="form-control" type="text" placeholder="Username" name="username" value="<?php if($username){echo $username;} ?>"   >
                     </div>
                     <div>
-                    <input class="form-control" type="password" placeholder="Password" name="password" required  >
+                    <input class="form-control" type="password" placeholder="Password" name="password" value="<?php if($password){echo $password;} ?>"   >
                     </div>
                     <div>
-                       <input type="submit" value="Login" class="btn btn-success mt-4" />
+                       <input type="submit" value="Login" name="login" class="btn btn-success mt-4" />
                     </div>
                </form>
           </div>
-      </div>
+      </div> 
+      <?php if(isset($username_not_found)){echo '<div class="alert alert-warning"> '.$username_not_found.'</div> ';}?> 
   </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
