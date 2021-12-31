@@ -65,7 +65,11 @@ if(!isset($_SESSION['user_login'])){
         <a href="#" class="list-group-item list-group-item-action"><i class="fa fa-user"></i>   All User </a> 
         </div> 
     </div> 
-    <div class="col-md-9">
+    <div class="col-md-9"> 
+
+    <div class="content">
+        <h2><i class="fa fa-dashboard"></i> Dashborad <small> statistics overview </small></h2>
+    </div>
         
     </div>
     </div>
