@@ -71,35 +71,27 @@
                   <th> Id </th>
                   <th> Name </th>
                   <th> Roll </th>
-                  <th> City </th>
+                  <th> Class </th>
                   <th> Mobile </th>
                   <th> Photo </th>
               </tr>
           </thead> 
           <tbody>
+            
+           <?php 
+              $db_sinfo = mysqli_query($link,"SELECT * FROM `student_info`");   
+               while($row = mysqli_fetch_assoc($db_sinfo)){ ?>  
+
               <tr>
-                  <td> 1 </td>
-                  <td> Motaleb Hossain </td>
-                  <td> 101 </td>
-                  <td> Pabna </td>
-                  <td> 0170911283 </td>
-                  <td> <img width="50px" height="50px" src="images/author.jpg"> </td>
-              </tr>
-              <tr>
-                  <td> 1 </td>
-                  <td> Motaleb Hossain </td>
-                  <td> 101 </td>
-                  <td> Pabna </td>
-                  <td> 0170911283 </td>
-                  <td> <img width="50px" height="50px" src="images/author.jpg"> </td>
-              </tr>
-              <tr>
-                  <td> 1 </td>
-                  <td> Motaleb Hossain </td>
-                  <td> 101 </td>
-                  <td> Pabna </td>
-                  <td> 0170911283 </td>
-                  <td> <img width="50px" height="50px" src="images/author.jpg"> </td>
-              </tr>
+                  <td> <?php echo $row['id']; ?> </td>
+                  <td> <?php echo $row['name']; ?> </td>
+                  <td> <?php echo $row['roll']; ?> </td>
+                  <td> <?php echo $row['class']; ?> </td>
+                  <td> <?php echo $row['pcontact']; ?> </td>
+                  <td> <img width="50px" height="50px" src="student_images/<?php echo $row['photo']; ?>"> </td>
+              </tr>  
+
+              <?php } ?>
+
           </tbody>
       </table> 

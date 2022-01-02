@@ -3,11 +3,7 @@
           <li class="active"> <a href="index.php?page=dashboard"> Dashboard </a> </li>
       </ol> 
      <?php 
-        if(isset($_POST['add-student'])){
-         echo '<pre>'; 
-            print_r($_POST); 
-            print_r($_FILES); 
-         echo '</pre>'; 
+        if(isset($_POST['add-student'])){ 
 
          $name =$_POST['name']; 
          $roll =$_POST['roll']; 
@@ -17,12 +13,24 @@
 
          $picture = explode('.',$_FILES['picture']['name']); 
          $picture_ex = end($picture); 
-         $picture = $roll.'.'.$picture_ex; 
-          echo $picture; 
+         $picture_name = $roll.'.'.$picture_ex; 
 
+          $query = "INSERT INTO `student_info`(`name`, `roll`, `class`, `pcontact`, `photo`) VALUES ('$name','$roll','$class','$pcontact','$picture_name')"; 
+          $result = mysqli_query($link,$query); 
+          if($result){
+              $success ="data insert success"; 
+              move_uploaded_file($_FILES['picture']['tmp_name'],'student_images/'.$picture_name); 
+          }else{
+            $error = "Data insert error"; 
           }
-     ?>
+          
+        }
+     ?> 
 
+<div class="row">
+   <?php if($success){ echo '<p class="alert alert-success">'.$success.'</p>';}else{ echo ""; }?> 
+   <?php if($error){ echo '<p class="alert alert-danger">'.$error.'</p>';}else{ echo ""; }?> 
+</div>
 <div class="row">
     <div class="col-md-6">
         <form action="" method="POST" enctype="multipart/form-data"> 
