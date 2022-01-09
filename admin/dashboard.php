@@ -3,6 +3,11 @@
           <li class="active"> Dashboard </li>
       </ol>
       <div class="row">
+
+          <?php
+            $count_student= mysqli_query($link,"SELECT * FROM `student_info`");
+            $total_student = mysqli_num_rows($count_student);
+          ?>
           <div class="col-md-4">
              <div class="card">
                    <div class="card-header">
@@ -13,17 +18,21 @@
                     <div class="card-body">
                         <div class="row">
                          <h4 class="col-md-9"> Students </h4> 
-                         <h4 class="col-md-3"> 10 </h4>  
+                         <h4 class="col-md-3"> <?= $total_student; ?> </h4>
                         </div> 
                    </div>
                    <div class="card-footer">
-                         <a href="#">All student</a>
+                         <a href="index.php?page=all-students">All student</a>
                          <i class="fa fa-right"></i>
                    </div>
                </div>
 
           </div>
           <div class="col-md-4">
+              <?php
+              $count_user= mysqli_query($link,"SELECT * FROM `users`");
+              $total_user = mysqli_num_rows($count_user);
+              ?>
              <div class="card">
                    <div class="card-header">
                       <i class="fa fa-users"></i> 
@@ -32,36 +41,18 @@
                <div class="card">
                     <div class="card-body">
                         <div class="row">
-                         <h4 class="col-md-9"> Students </h4> 
-                         <h4 class="col-md-3"> 10 </h4>  
+                         <h4 class="col-md-9"> Users </h4>
+                         <h4 class="col-md-3"> <?= $total_user; ?></h4>
                         </div> 
                    </div>
                    <div class="card-footer">
-                         <a href="#">All student</a>
+                         <a href="index.php?page=all-user">All users</a>
                          <i class="fa fa-right"></i>
                    </div>
                </div>
 
           </div>
-          <div class="col-md-4">
-             <div class="card">
-                   <div class="card-header">
-                      <i class="fa fa-users"></i> 
-                   </div>
-               </div> 
-               <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                         <h4 class="col-md-9"> Students </h4> 
-                         <h4 class="col-md-3"> 10 </h4>  
-                        </div> 
-                   </div>
-                   <div class="card-footer">
-                         <a href="#">All student</a>
-                         <i class="fa fa-right"></i>
-                   </div>
-               </div>
-          </div>
+
         
       </div> 
       <h2> New Students </h2>

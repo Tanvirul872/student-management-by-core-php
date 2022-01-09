@@ -36,17 +36,17 @@
                     <td>
                       <select class="form-control" name="choose" id="choose">
                           <option value=""> Select </option>
-                          <option value="1"> 1st </option>
-                          <option value="2"> 2nd </option>
-                          <option value="3"> 3rd </option>
-                          <option value="4"> 4th </option>
-                          <option value="5"> 5th </option>
+                          <option value="1st"> 1st </option>
+                          <option value="2nd"> 2nd </option>
+                          <option value="3rd"> 3rd </option>
+                          <option value="4th"> 4th </option>
+                          <option value="5th"> 5th </option>
                       </select>
                     </td>
                   </tr>
                   <tr>
                     <td><label for="roll"> Roll </label></td>
-                    <td><input type="text" name="roll" pattern="[0-9]{6}" placeholder="Enter your roll"  /></td>
+                    <td><input type="text" name="roll" placeholder="Enter your roll"  /></td>
                   </tr>
                   <tr>
                     <td></td>
@@ -58,6 +58,59 @@
 
             </div>
         </div>
+
+       <?php
+         require_once './admin/dbcon.php';
+         if(isset($_POST['show_info'])){
+             $choose = $_POST['choose'];
+             $roll = $_POST['roll'];
+             $result = mysqli_query($link,"SELECT * FROM `student_info` WHERE `class`='$choose' and `roll`='$roll'");
+              if(mysqli_num_rows($result)==1){
+
+                  $row = mysqli_fetch_assoc($result);
+
+              ?>
+                  <div class="row">
+                      <div class="col-md-8 offset-2">
+                          <table class="table table-bordered">
+
+                              <tr>
+
+                                  <img src="admin/images/<?= $row['photo'];?>" width="500px" height="200px">
+
+                              </tr>
+
+                              <tr>
+
+                                  <td>Name</td>
+                                  <td><?= $row['name'];?></td>
+                              </tr>
+
+                              <tr>
+
+                                  <td>Roll</td>
+                                  <td><?= $row['roll'];?></td>
+                              </tr>
+                              <tr>
+
+                                  <td>Class</td>
+                                  <td><?= $row['class'];?></td>
+                              </tr>
+                              <tr>
+
+                                  <td>Phone</td>
+                                  <td><?= $row['pcontact'];?></td>
+                              </tr>
+                          </table>
+                      </div>
+                  </div>
+
+              <?php
+              }else{
+                  echo 'No data found';
+              }
+          }
+        ?>
           
     </div>
 

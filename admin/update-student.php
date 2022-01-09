@@ -10,7 +10,6 @@
     $db_data = mysqli_query($link,"SELECT * FROM `student_info` WHERE `id`= '$id'");
     $db_row = mysqli_fetch_assoc($db_data);
 
-
 ?>
 <?php
 if(isset($_POST['update-student'])){

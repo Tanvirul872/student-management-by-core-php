@@ -49,7 +49,7 @@ if(!isset($_SESSION['user_login'])){
                 <a class="nav-link" href="#">Add user</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"> Profile </a>
+                <a class="nav-link" href="index.php?page=user-profile"> Profile </a>
             </li>
             <li class="nav-item">
                 <a href="logout.php" class="nav-link" href="#"> Logout </a>
@@ -68,7 +68,7 @@ if(!isset($_SESSION['user_login'])){
         </a> 
         <a href="index.php?page=add-student" class="list-group-item list-group-item-action"><i class="fa fa-user-plus"></i>   Add student </a> 
         <a href="index.php?page=all-students" class="list-group-item list-group-item-action"><i class="fa fa-user"></i>   All student </a> 
-        <a href="index.php?page=all-users" class="list-group-item list-group-item-action"><i class="fa fa-user"></i>   All User </a> 
+        <a href="index.php?page=all-user" class="list-group-item list-group-item-action"><i class="fa fa-user"></i>   All User </a>
         </div> 
     </div> 
     <div class="col-md-9"> 
